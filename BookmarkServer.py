@@ -44,6 +44,7 @@
 import http.server
 import requests
 from urllib.parse import unquote, parse_qs
+import os
 
 memory = {}
 
@@ -147,6 +148,7 @@ class Shortener(http.server.BaseHTTPRequestHandler):
             self.wfile.write("Page Not Found".encode())
 
 if __name__ == '__main__':
-    server_address = ('', 9994)
+    port = int(os.environ.get('PORT', 8000))   # Use PORT if it's there.
+    server_address = ('', port)
     httpd = http.server.HTTPServer(server_address, Shortener)
     httpd.serve_forever()
